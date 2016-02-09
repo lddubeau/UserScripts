@@ -252,6 +252,11 @@
                 },
                 reason: App.consts.reasons.trademark
             },
+            unix: {
+                expr: /\bunix\b/gi,
+                replacement: "Unix",
+                reason: App.consts.reasons.trademark
+            },
             linux: {
                 expr: /\blinux\b/gi,
                 replacement: "Linux",
@@ -562,9 +567,9 @@
                 reason: App.consts.reasons.trademark
             },
             gwt: {
-                expr: /([^\b\w.]|^)gwt[- ](mosaic|designer)\b/gi,
+                expr: /([^\b\w.]|^)gwt[- ](mosaic|designer)?\b/gi,
                 replacement: function (str,pre,titlecase) {
-                    var fixed = pre + "GWT" + (titlecase? ' '+titlecase.toTitleCase() : '');
+                    var fixed = pre + "GWT" + (titlecase? ' '+titlecase.toTitleCase() : ' ');
                     return fixed;
                 },
                 reason: App.consts.reasons.trademark
@@ -633,7 +638,7 @@
                 reason: App.consts.reasons.trademark
             },
             hadoop: {
-                expr: /\bhadoop\b/gi,
+                expr: /\bhad+o+p\b/gi,
                 replacement: "Hadoop",
                 reason: App.consts.reasons.trademark
             },
@@ -660,6 +665,19 @@
             vmware: {
                 expr: /\bvmware?\b/gi,
                 replacement: "VMware",
+                reason: App.consts.reasons.trademark
+            },
+            hortonworks: {
+                expr: /([^\b\w.]|^)horton ?works[- ](sandbox|data platform|phoenix|hive)?\b/gi,
+                replacement: function (str,pre,titlecase) {
+                    var fixed = pre + "Hortonworks" + (titlecase? ' '+titlecase.toTitleCase() : ' ');
+                    return fixed;
+                },
+                reason: App.consts.reasons.trademark
+            },
+            ambari: {
+                expr: /\bambari\b/gi,
+                replacement: "Ambari",
                 reason: App.consts.reasons.trademark
             },
             /*
@@ -912,6 +930,11 @@
             },
             wsdl: {
                 expr: /(?:[^\b\w.]|^)wsdl\b/gi,
+                replacement: function (match) { return match.toUpperCase(); },
+                reason: App.consts.reasons.acronym
+            },
+            hdp: {  // Hadoop related acronyms
+                expr: /(?:[^\b\w.]|^)h(?:dp|dfs|sm)\b/gi,
                 replacement: function (match) { return match.toUpperCase(); },
                 reason: App.consts.reasons.acronym
             },
@@ -1878,7 +1901,7 @@
                 reason: App.consts.reasons.spelling
             },
             environment: {  // http://www.oxforddictionaries.com/words/common-misspellings https://regex101.com/r/qD5zU6/1
-                expr: /\b(e)nvi?ro?[nm]+ent/gi,
+                expr: /\b(e)nvi?ro?[nmt]+ent/gi,
                 replacement: "$1nvironment",
                 reason: App.consts.reasons.spelling
             },
@@ -2000,6 +2023,16 @@
                 replacement: "$1eset",
                 reason: App.consts.reasons.spelling
             },
+            begin: {  // https://regex101.com/r/xZ9iC3/1
+                expr: /\b(b)eg+in?(ning|ner)?\b/gi,
+                replacement: "$1egin$2",
+                reason: App.consts.reasons.spelling
+            },
+            update: {  // https://regex101.com/r/rF6fZ2/1
+                expr: /\b(u)[pd]+at(e|ed|er|es|ing)\b/gi,
+                replacement: "$1updat$2",
+                reason: App.consts.reasons.spelling
+            },
             /*
             ** Grammar - Correct common grammatical errors.
             **/
@@ -2073,7 +2106,7 @@
                 reason: App.consts.reasons.grammar
             },
             ive: {
-                expr: /\bi['`´’]*v['`´’]*e\b/gi,
+                expr: /\bi['`´’ ]*v['`´’ ]*e\b/gi,
                 replacement: "I've",
                 reason: App.consts.reasons.grammar
             },
