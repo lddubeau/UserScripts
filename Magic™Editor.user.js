@@ -638,7 +638,7 @@
                 reason: App.consts.reasons.trademark
             },
             hadoop: {
-                expr: /\bhad+o+p\b/gi,
+                expr: /\bhad+o+p+\b/gi,
                 replacement: "Hadoop",
                 reason: App.consts.reasons.trademark
             },
@@ -678,6 +678,11 @@
             ambari: {
                 expr: /\bambari\b/gi,
                 replacement: "Ambari",
+                reason: App.consts.reasons.trademark
+            },
+            eclipse: {
+                expr: /\becli[ps]+e\b/gi,
+                replacement: "Eclipse",
                 reason: App.consts.reasons.trademark
             },
             /*
@@ -2030,7 +2035,7 @@
             },
             update: {  // https://regex101.com/r/rF6fZ2/1
                 expr: /\b(u)[pd]+at(e|ed|er|es|ing)\b/gi,
-                replacement: "$1updat$2",
+                replacement: "$1pdat$2",
                 reason: App.consts.reasons.spelling
             },
             /*
@@ -2057,7 +2062,7 @@
                     // has not had a unicode substitution error. (Git did this do me, once.)
                     function AvsAnOverride_(fword) {
                         //var exceptionsA_ = /^(?:uis?|co\w|form|v|data|media)/i;
-                        var exceptionsA_ = /^(?:uis?|data)/i;
+                        var exceptionsA_ = /^(?:uis?|data|java)/i;
                         var exceptionsAn_ = /(?:^[lr]value|a\b|sql)/i;
                         return (exceptionsA_.test(fword) ? article[0] :
                                 exceptionsAn_.test(fword) ? article[0]+"n" : false);
