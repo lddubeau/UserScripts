@@ -2038,6 +2038,11 @@
                 replacement: "$1pdat$2",
                 reason: App.consts.reasons.spelling
             },
+            question: {  // https://regex101.com/r/tC5yN8/2
+                expr: /\b(q)[ues]+t[io]+ne?/gi,
+                replacement: "$1uestion",
+                reason: App.consts.reasons.spelling
+            },
             /*
             ** Grammar - Correct common grammatical errors.
             **/
