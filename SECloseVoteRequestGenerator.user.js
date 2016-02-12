@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Stack Exchange CV Request Generator
 // @namespace      https://github.com/SO-Close-Vote-Reviewers/
-// @version        1.5.7
+// @version        1.5.8
 // @description    This script generates formatted close vote requests and sends them to a specified chat room
 // @author         @TinyGiant
 // @include        /^https?:\/\/\w*.?(stackexchange.com|stackoverflow.com|serverfault.com|superuser.com|askubuntu.com|stackapps.com|mathoverflow.net)\/q(uestions)?\/\d+/
@@ -359,9 +359,13 @@ if(typeof StackExchange === "undefined")
         var reason = $('input[type="text"]', CVRGUI.items.send).val();
         if(!reason) return false;
         reason = reasons.get(reason);
-        var tit = '[' + $('#question-header h1 a').text().replace(/\[(.*)\]/g, '($1)') + '](' + base + $('#question .short-link').attr('href') + ')'; 
-        var usr = $('.post-signature:not([align="right"]) .user-details').text().trim().match(/[^\n]+/)[0].trim(), tim;
+        var tit = '[' + $('#question-header h1 a').text().replace(/\[(.*)\]/g, '($1)') + '](' + base + $('#question .short-link').attr('href') + ')';
+        var user_link = $('.post-signature:not([align="right"]) .user-details > a').eq(0);
+        // If user_link contains a node, it is a "real" user, and we just need to get the text of the link. If not, then it is a deleted user. The .user-details that would
+        // contain the link and user flair for a "real" user contains only the defunct user name, and nothing else.
+        var usr = (user_link.length ? user_link : $('.post-signature:not([align="right"]) .user-details')).text().trim();
         if($('#question .owner a').length) usr = '[' + usr + '](' + base + $('#question .owner a').attr('href') + ')';
+        var tim;
         if($('#question .owner .relativetime').length) tim = $('#question .owner .relativetime').attr('title');
         var result = '[tag:cv-pls] ' + reason + ' ' + tit + ' - ' + usr + (tim ? ' - ' + tim : '');
         sendRequest(result);
